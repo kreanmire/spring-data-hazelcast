@@ -15,6 +15,10 @@
  */
 package org.springframework.data.hazelcast.repository.query;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.SliceImpl;
@@ -27,18 +31,13 @@ import org.springframework.data.repository.query.Parameter;
 import org.springframework.data.repository.query.Parameters;
 import org.springframework.data.repository.query.ParametersParameterAccessor;
 import org.springframework.data.repository.query.QueryMethod;
-import org.springframework.data.repository.query.QueryMethodEvaluationContextProvider;
 import org.springframework.data.repository.query.RepositoryQuery;
+import org.springframework.data.repository.query.ValueExpressionDelegate;
 import org.springframework.data.repository.query.parser.AbstractQueryCreator;
 import org.springframework.data.repository.query.parser.Part;
 import org.springframework.data.repository.query.parser.PartTree;
 import org.springframework.data.util.StreamUtils;
 import org.springframework.util.Assert;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -79,10 +78,10 @@ public class HazelcastPartTreeQuery
      * @param keyValueOperations         Interface to Hazelcast
      * @param queryCreator               Not used
      */
-    public HazelcastPartTreeQuery(QueryMethod queryMethod, QueryMethodEvaluationContextProvider evaluationContextProvider,
+    public HazelcastPartTreeQuery(QueryMethod queryMethod, ValueExpressionDelegate expressionDelegate,
                                   KeyValueOperations keyValueOperations,
                                   Class<? extends AbstractQueryCreator<?, ?>> queryCreator) {
-        super(queryMethod, evaluationContextProvider, keyValueOperations, queryCreator);
+        super(queryMethod, expressionDelegate, keyValueOperations, queryCreator);
         this.queryMethod = queryMethod;
         this.keyValueOperations = keyValueOperations;
 
